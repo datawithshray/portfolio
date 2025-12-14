@@ -1,135 +1,1536 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=1024, initial-scale=1.0"/>
-  <title>Shray | Power BI Developer</title>
-  <link rel="icon" type="image/png" href="assets/Power Bi Icon.png">
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1200, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Shray Sharma | Data Analyst</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Critical CSS to prevent mobile responsiveness */
+        html, body {
+            min-width: 1200px;
+            overflow-x: auto !important;
+            -webkit-text-size-adjust: 100%;
+            -moz-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
+        
+        body {
+            position: relative;
+        }
+        
+        .mobile-warning {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #ff6b6b;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            z-index: 9999;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        @media screen and (max-width: 1199px) {
+            .mobile-warning {
+                display: block;
+            }
+            
+            body {
+                overflow-x: scroll !important;
+            }
+            
+            .container {
+                min-width: 1200px;
+            }
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #a5b4fc;
+            --secondary: #10b981;
+            --secondary-dark: #059669;
+            --dark: #0f172a;
+            --darker: #020617;
+            --dark-card: #1e293b;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --gray-dark: #475569;
+            --accent: #f59e0b;
+            --border: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 20%);
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: 4rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 3px;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        section {
+            padding: 6rem 10%;
+            min-width: 1200px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--secondary-dark));
+            transition: left 0.5s ease;
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 0;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline::before {
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+        }
+
+        .btn-outline:hover {
+            color: white;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.2rem 10%;
+            background-color: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            min-width: 1200px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            color: var(--primary);
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none !important;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            min-height: 100vh;
+            padding-top: 100px;
+            position: relative;
+            overflow: hidden;
+            min-width: 1200px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            flex: 1;
+            padding-right: 3rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--primary-light);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hero-subtitle::before {
+            content: '';
+            width: 30px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        .hero-image {
+            flex: 1;
+            position: relative;
+        }
+
+        .profile-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            margin: 0 auto;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 8px solid var(--dark-card);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-bg {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            z-index: 1;
+            opacity: 0.2;
+            filter: blur(20px);
+        }
+
+        /* Floating Elements */
+        .floating-element {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.2rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            z-index: 1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) {
+            top: 20%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            top: 60%;
+            left: 10%;
+            animation-delay: 1s;
+        }
+
+        .floating-element:nth-child(3) {
+            top: 30%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .floating-element:nth-child(4) {
+            top: 70%;
+            right: 5%;
+            animation-delay: 3s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Skills Section */
+        .skills {
+            background-color: var(--dark);
+            position: relative;
+            overflow: hidden;
+            min-width: 1200px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            text-align: center;
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .skill-card {
+            background-color: var(--dark-card);
+            border-radius: 16px;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .skill-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-list {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .skill-list li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .skill-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .skill-level {
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .skill-level-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 4px;
+            width: 0;
+            transition: width 1.5s ease;
+        }
+
+        /* Experience Section */
+        .experience {
+            position: relative;
+            min-width: 1200px;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 4rem auto 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            border-radius: 3px;
+        }
+
+        .timeline-item {
+            margin-bottom: 3rem;
+            position: relative;
+            width: 45%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 55%;
+        }
+
+        .timeline-content {
+            background-color: var(--dark-card);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            width: 20px;
+            height: 20px;
+            background-color: var(--dark-card);
+            transform: rotate(45deg);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -10px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -10px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            z-index: 2;
+            border: 4px solid var(--dark);
+        }
+
+        .timeline-date {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Projects Section */
+        .projects {
+            background-color: var(--dark);
+            min-width: 1200px;
+        }
+
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background-color: var(--dark-card);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-video-container {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .project-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .project-card:hover .project-video {
+            transform: scale(1.05);
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-tag {
+            background-color: rgba(99, 102, 241, 0.1);
+            color: var(--primary-light);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Data Visualization Section */
+        .data-viz {
+            position: relative;
+            min-width: 1200px;
+        }
+
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .chart-card {
+            background-color: var(--dark-card);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .chart-title {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chart-container {
+            height: 250px;
+            position: relative;
+        }
+
+        /* Contact Section */
+        .contact {
+            background-color: var(--dark);
+            text-align: center;
+            min-width: 1200px;
+        }
+
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-links {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .contact-card {
+            background-color: var(--dark-card);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-decoration: none;
+            color: var(--light);
+        }
+
+        .contact-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--darker);
+            padding: 4rem 10% 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            min-width: 1200px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--light);
+            text-decoration: none;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            color: var(--gray-dark);
+            font-size: 0.9rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            width: 100%;
+        }
+
+        /* Force Desktop Layout - Remove all mobile responsive styles */
+        @media screen and (max-width: 1199px) {
+            html, body {
+                width: 1200px;
+                overflow-x: scroll !important;
+            }
+            
+            body {
+                min-width: 1200px;
+                width: 1200px;
+            }
+            
+            .container, header, section, footer {
+                min-width: 1200px;
+                width: 1200px;
+            }
+            
+            .nav-links {
+                display: flex !important;
+            }
+            
+            .skills-container {
+                grid-template-columns: repeat(3, 1fr) !important;
+            }
+            
+            .projects-container {
+                grid-template-columns: repeat(3, 1fr) !important;
+            }
+            
+            .charts-container {
+                grid-template-columns: repeat(3, 1fr) !important;
+            }
+            
+            .contact-links {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+        }
+
+        /* Disable touch zoom and gestures */
+        * {
+            touch-action: manipulation;
+        }
+    </style>
 </head>
-<body class="dark-mode">
-  <nav>
-    <div class="nav-container">
-      <div class="logo">Shray Sharma</div>
-      <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#certificates">Certificates</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li><button id="theme-toggle">🌓</button></li>
-      </ul>
+<body>
+    <!-- Mobile Warning Banner -->
+    <div class="mobile-warning">
+        <i class="fas fa-desktop"></i> This portfolio is optimized for desktop viewing. Please view on a larger screen for the best experience.
     </div>
-  </nav>
 
-  <header>
-    <h1>Hello, I'm Shray Sharma</h1>
-    <p>Power BI Developer • Data Analyst • DAX Expert</p>
-    <a class="resume-button" href="assets/Shray Sharma Resume.pdf" download>📄 Download Resume</a>
-  </header>
+    <!-- Header -->
+    <header id="header">
+        <nav class="navbar">
+            <a href="#" class="logo">
+                <i class="fas fa-chart-line logo-icon"></i>
+                Shray Sharma
+            </a>
+            <div class="menu-toggle" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#data-viz">Analytics</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <section id="about">
-    <h2>About Me</h2>
-    <p>
-      I’m a B.Tech graduate in IT from NIET, passionate about turning data into meaningful insights. With a strong grasp of Power BI, DAX, SQL, and basic Python, I build impactful dashboards that tell clear business stories. I’m focused on efficiency, continuous learning, and driving data-informed decisions.
-    </p>
-  </section>
+    <!-- Floating Elements -->
+    <div class="floating-element"><i class="fas fa-database"></i></div>
+    <div class="floating-element"><i class="fas fa-chart-bar"></i></div>
+    <div class="floating-element"><i class="fas fa-code"></i></div>
+    <div class="floating-element"><i class="fas fa-calculator"></i></div>
 
-  <section id="skills">
-    <h2>Skills & Tools</h2>
-    <ul class="skills-list">
-      <li>Power BI</li>
-      <li>DAX</li>
-      <li>SQL</li>
-      <li>Python</li>
-      <li>Power BI Desktop</li>
-      <li>SSMS</li>
-      <li>VS Code</li>
-      <li>GitHub</li>
-    </ul>
-  </section>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-subtitle">Data Analyst</div>
+                <h1>Turning Raw Data Into Strategic Insights</h1>
+                <p class="hero-description">With over 2 years of experience in data analysis and visualization, I specialize in transforming complex datasets into actionable business intelligence using Power BI, SQL, Python, and Tableau.</p>
+                
+                <div class="hero-btns">
+                    <a href="#projects" class="btn">
+                        <i class="fas fa-eye"></i> View Projects
+                    </a>
+                    <a href="assets\Shray Sharma Resume.pdf" class="btn btn-outline" download>
+                        <i class="fas fa-download"></i> Download Resume
+                    </a>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Projects Completed</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">2+</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Client Satisfaction</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="profile-container">
+                    <div class="profile-bg"></div>
+                    <img src="assets\profile.jpg" alt="Shray Sharma" class="profile-img">
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <section id="projects">
-    <h2>Projects</h2>
-    <div class="filter-buttons">
-      <button onclick="filterProjects('all')">All</button>
-      <button onclick="filterProjects('business')">Business</button>
-      <button onclick="filterProjects('ecommerce')">E-Commerce</button>
-      <button onclick="filterProjects('entertainment')">Entertainment</button>
-    </div>
-    <div class="project-grid">
-      <div class="project-card business">
-        <h3>Restaurant Orders</h3>
-        <p>Analyzed order trends, peak hours & customer habits for decision-making.</p>
-        <a href="assets/restaurant-orders.mp4" target="_blank">🔗 View Dashboard</a>
-      </div>
-      <div class="project-card entertainment">
-        <h3>Music Streaming Trends</h3>
-        <p>Visualized patterns from 5,000+ global users to explore genre preferences.</p>
-        <a href="assets/Global Music Streaming Trends.mp4" target="_blank">🔗 View Dashboard</a>
-      </div>
-      <div class="project-card entertainment">
-        <h3>IPL Dashboard</h3>
-        <p>Analyzed IPL 2008–2024 with match insights and top player stats.</p>
-        <a href="assets/ipl-dashboard.mp4" target="_blank">🔗 View Dashboard</a>
-      </div>
-    </div>
-  </section>
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <div class="section-header">
+                <h2>Technical Expertise</h2>
+                <p class="section-subtitle">Proficient in a wide range of data analytics tools and technologies, with advanced skills in visualization and business intelligence platforms.</p>
+            </div>
+            
+            <div class="skills-container">
+                <div class="skill-card">
+                    <i class="fas fa-chart-pie skill-icon"></i>
+                    <h3>Data Visualization</h3>
+                    <p>Creating interactive dashboards and reports that translate complex data into understandable insights.</p>
+                    <ul class="skill-list">
+                        <li>
+                            <div class="skill-name">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Power BI</span>
+                            </div>
+                            <div class="skill-level">
+                                <div class="skill-level-bar" data-level="95"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="skill-name">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Tableau</span>
+                            </div>
+                            <div class="skill-level">
+                                <div class="skill-level-bar" data-level="85"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="skill-name">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Excel Advanced</span>
+                            </div>
+                            <div class="skill-level">
+                                <div class="skill-level-bar" data-level="90"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="skill-card">
+                    <i class="fas fa-database skill-icon"></i>
+                    <h3>Data Analysis</h3>
+                    <p>Extracting, cleaning, and analyzing data to uncover patterns, trends, and actionable insights.</p>
+                    <ul class="skill-list">
+                        <li>
+                            <div class="skill-name">
+                                <i class="fas fa-check-circle"></i>
+                                <span>SQL & NoSQL</span>
+                            </div>
+                            <div class="skill-level">
+                                <div class="skill-level-bar" data-level="92"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="skill-name">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Python (Pandas, NumPy)</span>
+                            </div>
+                            <div class="skill-level">
+                                <div class="skill-level-bar" data-level="88"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="skill-name">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Statistical Analysis</span>
+                            </div>
+                            <div class="skill-level">
+                                <div class="skill-level-bar" data-level="85"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="skill-card">
+                    <i class="fas fa-cogs skill-icon"></i>
+                    <h3>Business Intelligence</h3>
+                    <p>Implementing end-to-end BI solutions that drive data-informed decision making across organizations.</p>
+                    <ul class="skill-list">
+                        <li>
+                            <div class="skill-name">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Dashboard Development</span>
+                            </div>
+                            <div class="skill-level">
+                                <div class="skill-level-bar" data-level="94"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="skill-name">
+                                <i class="fas fa-check-circle"></i>
+                                <span>ETL Processes</span>
+                            </div>
+                            <div class="skill-level">
+                                <div class="skill-level-bar" data-level="87"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="skill-name">
+                                <i class="fas fa-check-circle"></i>
+                                <span>KPI Development</span>
+                            </div>
+                            <div class="skill-level">
+                                <div class="skill-level-bar" data-level="90"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <section id="certificates">
-    <h2>Certificates</h2>
-    <div class="certificate-grid">
-      <div class="certificate-card">
-        <img src="assets/Microsoft Power Bi for Business Intelligence Certificate.jpg" alt="Power BI Certificate">
-        <h3>Microsoft Power BI Desktop</h3>
-        <a href="assets/Microsoft Power Bi for Business Intelligence.pdf" target="_blank">🔗 View Certificate</a>
-      </div>
-      <div class="certificate-card">
-        <img src="assets/Matlab Onramp.png" alt="Matlab Certificate">
-        <h3>Matlab Onramp</h3>
-        <a href="assets/certificate of MATHLAB.pdf" target="_blank">🔗 View Certificate</a>
-      </div>
-    </div>
-  </section>
+    <!-- Experience Section -->
+    <section id="experience" class="experience">
+        <div class="container">
+            <div class="section-header">
+                <h2>Professional Journey</h2>
+                <p class="section-subtitle">A track record of delivering impactful data solutions across diverse industries and business domains.</p>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">
+                            <i class="far fa-calendar"></i>
+                            Present - 2025
+                        </div>
+                        <h3>Data Analyst</h3>
+                        <h4>Utopia Digitech - Holostik</h4>
+                        <p>Led data analytics initiatives for Fortune 50+ clients, developed predictive models that improved client ROI by 23%, and mentored team in advanced SQL and Power BI techniques.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">SQL Server</span>
+                            <span class="project-tag">Power Bi</span>
+                            <span class="project-tag">Python</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">
+                            <i class="far fa-calendar"></i>
+                            2025 - 2024
+                        </div>
+                        <h3>Data Analyst</h3>
+                        <h4>Utopia Digitech - Holostik</h4>
+                        <p>Designed and implemented interactive dashboards that reduced reporting time by 40%, performed complex data analysis to identify market trends, and automated monthly reporting processes along with some internal app development using Python.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Power Bi</span>
+                            <span class="project-tag">Excel</span>
+                            <span class="project-tag">TSQL</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">
+                            <i class="far fa-calendar"></i>
+                            2024 - 2023
+                        </div>
+                        <h3>Software Engineer Trainee</h3>
+                        <h4>Utopia Digitech - Holostik</h4>
+                        <p>Assisted in data collection and cleaning processes, created basic visualizations for team presentations, and contributed to the development of data quality standards and documentation.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Excel</span>
+                            <span class="project-tag">PowerPoint</span>
+                            <span class="project-tag">Basic SQL</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <section id="contact">
-    <h2>Contact Me</h2>
-    <p>Connect with me via the platforms below:</p>
-    <div class="contact-buttons">
-      <a href="https://github.com/Developer-Shray" target="_blank" class="contact-btn github" aria-label="GitHub">
-        <img src="assets/github-icon.png" alt="GitHub" />
-      </a>
-      <a href="https://www.linkedin.com/in/shray-sharma-a3760b1ab" target="_blank" class="contact-btn linkedin" aria-label="LinkedIn">
-        <img src="assets/linkedin-icon.png" alt="LinkedIn" />
-      </a>
-      <a href="mailto:shraysharmagnps@gmail.com" class="contact-btn email" aria-label="Email">
-        <img src="assets/email-icon.png" alt="Email" />
-      </a>
-      <a href="tel:+919012390154" class="contact-btn phone" aria-label="Phone">
-        <img src="assets/phone-icon.png" alt="Phone" />
-      </a>
-      <a href="https://wa.me/919012390154" target="_blank" class="contact-btn whatsapp" aria-label="WhatsApp">
-        <img src="assets/whatsapp-icon.png" alt="WhatsApp" />
-      </a>
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <div class="section-header">
+                <h2>Featured Projects</h2>
+                <p class="section-subtitle">Hands-on experience with real-world data analytics projects showcasing technical expertise and business impact.</p>
+            </div>
+            
+            <div class="projects-container">
+                <div class="project-card">
+                    <div class="project-video-container">
+                        <video class="project-video" controls poster="assets\Exec Dashboard.png">
+                            <source src="assets\AdventureWorks Dashboard.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="project-content">
+                        <h3>Adventure Works Bike Shop Dashboard</h3>
+                        <p>Interactive Power BI dashboard for tracking sales metrics across multiple regions with predictive analytics of a large business. This project includes complex DAX Calculations.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Power BI</span>
+                            <span class="project-tag">DAX</span>
+                            <span class="project-tag">SQL</span>
+                            <span class="project-tag">Excel</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-video-container">
+                        <video class="project-video" controls poster="assets\Uber Dashboard.png">
+                            <source src="assets\Uber Data Dashbard.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="project-content">
+                        <h3>Uber Data Analytics Dashboard</h3>
+                        <p>A 3-page interactive Power BI dashboard built to analyze Uber ride data and deliver clear, actionable business insights. Dark-themed dashboard UI for enhanced readability. This project highlights how interactive dashboards can transform raw ride data into meaningful insights that support data-driven decision-making.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Power Bi</span>
+                            <span class="project-tag">DAX</span>
+                            <span class="project-tag">Public Dataset</span>
+                            <span class="project-tag">Measures</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-video-container">
+                        <video class="project-video" controls poster="assets\Watch Company Dashboard.png">
+                            <source src="assets\Watch Company Dashboard.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="project-content">
+                        <h3>Premium Watch Company Sales Dashboard</h3>
+                        <p>Python & SQL solution for premium watch Company sales & uses Power Bi for Data Visualization & Storytelling.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">Advanced SQL</span>
+                            <span class="project-tag">DAX</span>
+                            <span class="project-tag">Sales Analysis</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    </div>
-  </section>
+    <!-- Data Visualization Section -->
+    <section id="data-viz" class="data-viz">
+        <div class="container">
+            <div class="section-header">
+                <h2>Analytics Showcase</h2>
+                <p class="section-subtitle">Interactive data visualizations demonstrating analytical capabilities and technical proficiency.</p>
+            </div>
+            
+            <div class="charts-container">
+                <div class="chart-card">
+                    <div class="chart-title">
+                        <i class="fas fa-chart-line"></i>
+                        Skill Proficiency Distribution
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="skillsChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-card">
+                    <div class="chart-title">
+                        <i class="fas fa-chart-bar"></i>
+                        Project Type Distribution
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="projectsChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-card">
+                    <div class="chart-title">
+                        <i class="fas fa-chart-pie"></i>
+                        Tool Usage Frequency
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="toolsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <footer>
-    <p>© 2025 Shray Sharma | Power BI Developer</p>
-  </footer>
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Get In Touch</h2>
+                <p class="section-subtitle">Let's discuss how data analytics can transform your business decisions and drive growth.</p>
+            </div>
+            
+            <div class="contact-links">
+                <a href="https://www.linkedin.com/in/shray-sharma-a3760b1ab" target="_blank" class="contact-card">
+                    <i class="fab fa-linkedin contact-icon"></i>
+                    <h4>LinkedIn</h4>
+                    <p>Connect professionally and view my experience</p>
+                    <div class="contact-label">Connect Now</div>
+                </a>
+                
+                <a href="https://github.com/datawithshray" target="_blank" class="contact-card">
+                    <i class="fab fa-github contact-icon"></i>
+                    <h4>GitHub</h4>
+                    <p>Explore my data analysis projects and code repositories</p>
+                    <div class="contact-label">View Projects</div>
+                </a>
+                
+                <a href="mailto:datawithshray@outlook.com" class="contact-card">
+                    <i class="fas fa-envelope contact-icon"></i>
+                    <h4>Email</h4>
+                    <p>datawithshray@outlook.com</p>
+                    <div class="contact-label">Send Message</div>
+                </a>
+                
+                <a href="https://wa.me/9012390154" target="_blank" class="contact-card">
+                    <i class="fab fa-whatsapp contact-icon"></i>
+                    <h4>WhatsApp</h4>
+                    <p>+91 90123-90154</p>
+                    <div class="contact-label">Quick Chat</div>
+                </a>
+            </div>
+            
+            <div style="margin-top: 4rem;">
+                <a href="assets\Shray Sharma Resume.pdf" class="btn" download>
+                    <i class="fas fa-file-pdf"></i> Download Complete Resume (PDF)
+                </a>
+            </div>
+        </div>
+    </section>
 
-  <script>
-    document.getElementById("theme-toggle").addEventListener("click", () => {
-      document.body.classList.toggle("dark-mode");
-    });
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <a href="#" class="footer-logo">
+                <i class="fas fa-chart-line"></i> Shray Sharma
+            </a>
+            
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#skills">Skills</a>
+                <a href="#experience">Experience</a>
+                <a href="#projects">Projects</a>
+                <a href="#data-viz">Analytics</a>
+                <a href="#contact">Contact</a>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2025 Shray Sharma. All rights reserved.
+            </div>
+        </div>
+    </footer>
 
-    function filterProjects(category) {
-      document.querySelectorAll('.project-card').forEach(card => {
-        card.style.display = (category === 'all' || card.classList.contains(category)) ? 'block' : 'none';
-      });
-    }
-  </script>
+    <script>
+        // Force desktop view on mobile
+        function forceDesktopView() {
+            const viewport = document.querySelector('meta[name="viewport"]');
+            viewport.setAttribute('content', 'width=1200, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+            
+            // Prevent zooming on mobile
+            document.addEventListener('touchstart', function(event) {
+                if (event.touches.length > 1) {
+                    event.preventDefault();
+                }
+            }, { passive: false });
+
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function(event) {
+                const now = (new Date()).getTime();
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
+
+            // Prevent double tap zoom
+            document.addEventListener('gesturestart', function(e) {
+                e.preventDefault();
+            });
+        }
+
+        // Initialize Charts
+        const initCharts = () => {
+            const skillsCtx = document.getElementById('skillsChart').getContext('2d');
+            const projectsCtx = document.getElementById('projectsChart').getContext('2d');
+            const toolsCtx = document.getElementById('toolsChart').getContext('2d');
+            
+            // Skills Chart for Skill Proficiency Distribution
+            new Chart(skillsCtx, {
+                type: 'radar',
+                data: {
+                    labels: ['Power BI', 'SQL', 'Python', 'Tableau', 'Excel', 'Statistics'],
+                    datasets: [{
+                        label: 'Proficiency Level',
+                        data: [95, 92, 75, 65, 80, 85],
+                        backgroundColor: 'rgba(99, 102, 241, 0.2)',
+                        borderColor: 'rgba(99, 102, 241, 1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: 'rgba(99, 102, 241, 1)',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                stepSize: 20,
+                                display: false
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            angleLines: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            pointLabels: {
+                                color: '#94a3b8',
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+            
+            // Projects Chart for Project Type Distribution
+            new Chart(projectsCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['BI Dashboards', 'Data Analysis', 'Forecasting', 'Automation', 'Reporting'],
+                    datasets: [{
+                        label: 'Projects Completed',
+                        data: [15, 12, 8, 10, 5],
+                        backgroundColor: [
+                            'rgba(99, 102, 241, 0.8)',
+                            'rgba(16, 185, 129, 0.8)',
+                            'rgba(245, 158, 11, 0.8)',
+                            'rgba(239, 68, 68, 0.8)',
+                            'rgba(139, 92, 246, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(99, 102, 241, 1)',
+                            'rgba(16, 185, 129, 1)',
+                            'rgba(245, 158, 11, 1)',
+                            'rgba(239, 68, 68, 1)',
+                            'rgba(139, 92, 246, 1)'
+                        ],
+                        borderWidth: 1,
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#94a3b8'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: '#94a3b8'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+            
+            // Tools Chart for Tool Usage Frequency
+            new Chart(toolsCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Power BI', 'SQL', 'Python', 'Tableau', 'Excel', 'Others'],
+                    datasets: [{
+                        data: [30, 30, 15, 10, 13, 2],
+                        backgroundColor: [
+                            'rgba(99, 102, 241, 0.8)',
+                            'rgba(16, 185, 129, 0.8)',
+                            'rgba(245, 158, 11, 0.8)',
+                            'rgba(239, 68, 68, 0.8)',
+                            'rgba(139, 92, 246, 0.8)',
+                            'rgba(148, 163, 184, 0.8)'
+                        ],
+                        borderColor: 'rgba(30, 41, 59, 1)',
+                        borderWidth: 2,
+                        hoverOffset: 15
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#94a3b8',
+                                padding: 20,
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        };
+        
+        // Animate skill bars on scroll
+        const animateSkillBars = () => {
+            const skillBars = document.querySelectorAll('.skill-level-bar');
+            
+            skillBars.forEach(bar => {
+                const level = bar.getAttribute('data-level');
+                bar.style.width = level + '%';
+                bar.setAttribute('data-animated', 'true');
+            });
+        };
+        
+        // Header background on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.style.backgroundColor = 'rgba(15, 23, 42, 0.95)';
+                header.style.backdropFilter = 'blur(15px)';
+            } else {
+                header.style.backgroundColor = 'rgba(15, 23, 42, 0.85)';
+            }
+        });
+        
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            forceDesktopView();
+            initCharts();
+            animateSkillBars();
+            
+            // Add smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if(targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if(targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Force layout on window resize
+            window.addEventListener('resize', forceDesktopView);
+        });
+    </script>
 </body>
 </html>
